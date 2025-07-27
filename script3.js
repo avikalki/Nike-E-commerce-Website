@@ -1,108 +1,48 @@
-const products = [
-  { id: 1, name: "Men's Kurta", price: 1299.00, image: "mens.jpeg" },
-  { id: 2, name: "Women's Saree", price: 2499.00, image: "womens.jpeg" },
-  { id: 3, name: "Lehenga Choli", price: 4999.00, image: "lehanga.jpeg" },
-  { id: 4, name: "Men's Sherwani", price: 5999.00, image: "sehrawani.jpeg" },
-  { id: 5, name: "Kids' Traditional Dress", price: 899.00, image: "kids.jpeg" },
-  { id: 6, name: "Ethnic Dupatta", price: 499.00, image: "ethnic.jpeg" }
-];
+let menu = document.querySelector('#menu-bar');
+let navbar = document.querySelector('.navbar');
 
-const productsContainer = document.getElementById("products");
-const cartList = document.getElementById("cartList");
-const totalEl = document.getElementById("total");
-const emptyCart = document.getElementById("emptyCart");
+menu.onclick = () =>{
+  menu.classList.toggle('fa-times');
+  navbar.classList.toggle('active');
+}
 
-let cart = [];
+window.onscroll = () =>{
+  menu.classList.remove('fa-times');
+  navbar.classList.remove('active');
+}
 
-function renderProducts() {
-  products.forEach(product => {
-    const div = document.createElement("div");
-    div.className = "product";
+let slides = document.querySelectorAll('.slide-container');
+let index = 0;
 
-    div.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" />
-      <h3>${product.name}</h3>
-      <p>₹${product.price.toFixed(2)}</p>
-      <button onclick="addToCart(${product.id})">Add to Cart</button>
-    `;
+function next(){
+  slides[index].classList.remove('active');
+  index = (index + 1) % slides.length;
+  slides[index].classList.add('active');
+}
 
-    productsContainer.appendChild(div);
+function prev(){
+  slides[index].classList.remove('active');
+  index = (index - 1 + slides.length) % slides.length;
+  slides[index].classList.add('active');
+}
+
+document.querySelectorAll('.featured-image-1').forEach(image_1 =>{
+  image_1.addEventListener('click', () =>{
+    var src = image_1.getAttribute('src');
+    document.querySelector('.big-image-1').src = src;
   });
-}
-
-function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  const existing = cart.find(item => item.id === productId);
-
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
-
-  renderCart();
-}
-
-function renderCart() {
-  cartList.innerHTML = "";
-  if (cart.length === 0) {
-    emptyCart.style.display = "block";
-    totalEl.textContent = "0.00";
-    return;
-  }
-  emptyCart.style.display = "none";
-
-  let total = 0;
-  cart.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name} x ${item.quantity} – ₹${(item.price * item.quantity).toFixed(2)}`;
-    cartList.appendChild(li);
-    total += item.price * item.quantity;
-  });
-
-  totalEl.textContent = total.toFixed(2);
-}
-
-renderProducts();
-renderCart();
-
-/* Clear cart and review functionality */
-
-const clearCartBtn = document.getElementById("clearCartBtn");
-const reviewForm = document.getElementById("reviewForm");
-const reviewsList = document.getElementById("reviewsList");
-
-clearCartBtn.addEventListener("click", () => {
-  cart = [];
-  renderCart();
 });
 
-// Store reviews in an array
-const reviews = [];
-
-reviewForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("reviewerName").value.trim();
-  const rating = document.getElementById("reviewRating").value;
-  const comment = document.getElementById("reviewComment").value.trim();
-
-  if (!name || !rating || !comment) {
-    alert("Please fill all review fields.");
-    return;
-  }
-
-  const review = { name, rating, comment };
-  reviews.push(review);
-  renderReviews();
-
-  // Reset form fields
-  reviewForm.reset();
-
-  // Show toast notification
-  showToast("Review submitted successfully!");
+document.querySelectorAll('.featured-image-2').forEach(image_2 =>{
+  image_2.addEventListener('click', () =>{
+    var src = image_2.getAttribute('src');
+    document.querySelector('.big-image-2').src = src;
+  });
 });
 
-function renderReviews() {
-  reviewsList
-}
+document.querySelectorAll('.featured-image-3').forEach(image_3 =>{
+  image_3.addEventListener('click', () =>{
+    var src = image_3.getAttribute('src');
+    document.querySelector('.big-image-3').src = src;
+  });
+});
